@@ -1,0 +1,76 @@
+<mat-toolbar color="primary">
+  <span class="title-center">Kredit</span>
+</mat-toolbar>
+
+<div class="container mat-elavation-z8">
+  <mat-form-field>
+    <input
+      matInput
+      (keyup)="applyFilter($event.target.value)"
+      placeholder="Filter"
+    />
+  </mat-form-field>
+  <mat-table #table [dataSource]="dataSource" class="mat-cell">
+    <!--ID-->
+    <ng-container matColumnDef="id">
+      <mat-header-cell *matHeaderCellDef>ID</mat-header-cell>
+      <mat-cell *matCellDef="let row">{{ row.id }}</mat-cell>
+    </ng-container>
+
+    <!--naziv-->
+    <ng-container matColumnDef="naziv">
+      <mat-header-cell *matHeaderCellDef>naziv</mat-header-cell>
+      <mat-cell *matCellDef="let row">{{ row.naziv }}</mat-cell>
+    </ng-container>
+
+    <!-- opis -->
+    <ng-container matColumnDef="opis">
+      <mat-header-cell *matHeaderCellDef>opis</mat-header-cell>
+      <mat-cell *matCellDef="let row">{{ row.opis }}</mat-cell>
+    </ng-container>
+
+    <!--oznaka-->
+    <ng-container matColumnDef="oznaka">
+      <mat-header-cell *matHeaderCellDef>oznaka</mat-header-cell>
+      <mat-cell *matCellDef="let row">{{ row.oznaka }}</mat-cell>
+    </ng-container>
+
+    <!-- Action Buttons -->
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef>
+        <button (click)="openDialog(1)" mat-icon-button color="primary">
+          <mat-icon>add</mat-icon>
+        </button>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let row; let i = index">
+        <button
+          (click)="openDialog(2, row.id, row.naziv, row.opis, row.oznaka)"
+          mat-icon-button
+          color="primary"
+        >
+          <mat-icon aria-label="Edit">edit</mat-icon>
+        </button>
+        <button
+          (click)="openDialog(3, row.id, row.naziv, row.opis, row.oznaka)"
+          mat-icon-button
+          color="primary"
+        >
+          <mat-icon aria-label="Delete">delete</mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row
+      style="cursor: pointer"
+      *matRowDef="let row; columns: displayedColumns"
+      (click)="selectRow(row)"
+    >
+    </mat-row>
+  </mat-table>
+  <mat-paginator
+    [length]="100"
+    [pageSize]="5"
+    [pageSizeOptions]="[5, 10, 25, 100]"
+  >
+  </mat-paginator>
+</div>
